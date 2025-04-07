@@ -1,0 +1,12 @@
+# compile verilog/system verilog design source files
+sv xil_defaultlib  \
+"../../../../../../Users/kccistc/Downloads/ControlUnit.sv" \
+"../../../../../../Users/kccistc/Downloads/DataPath.sv" \
+"../../../../../../Users/kccistc/Downloads/top_DedicatedProcessor.sv" \
+"../../../../../../Users/kccistc/Downloads/tb_DedicatedProcessor.sv" \
+
+# compile glbl module
+verilog xil_defaultlib "glbl.v"
+
+# Do not sort compile order
+nosort

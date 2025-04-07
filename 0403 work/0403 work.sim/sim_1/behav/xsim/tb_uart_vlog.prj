@@ -1,0 +1,13 @@
+# compile verilog/system verilog design source files
+verilog xil_defaultlib  \
+"../../../../0403 work.srcs/sources_1/imports/새 폴더/btn_debounce.v" \
+"../../../../0403 work.srcs/sources_1/imports/새 폴더/counter_up_down1.v" \
+"../../../../0403 work.srcs/sources_1/imports/새 폴더/fndController1.v" \
+"../../../../0403 work.srcs/sources_1/imports/새 폴더/uart.v" \
+"../../../../../0403stopwatch/0403stopwatch.srcs/sim_1/new/tb_uart.v" \
+
+# compile glbl module
+verilog xil_defaultlib "glbl.v"
+
+# Do not sort compile order
+nosort
