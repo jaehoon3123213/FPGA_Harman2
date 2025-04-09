@@ -3,10 +3,10 @@
 <!--                                                         -->
 <!-- Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.   -->
 
-<Project Version="7" Minor="54" Path="C:/FPGA_Harman2/0407pracitce_register_file/0407pracitce_register_file.xpr">
+<Project Version="7" Minor="54" Path="C:/FPGA_Harman2/0409_CPU/0409_CPU.xpr">
   <DefaultLaunch Dir="$PRUNDIR"/>
   <Configuration>
-    <Option Name="Id" Val="464291446abd49d38d4403faeb06c4c3"/>
+    <Option Name="Id" Val="0f1bd8b3faa743a6bac442ca501c22c7"/>
     <Option Name="Part" Val="xc7a35tcpg236-1"/>
     <Option Name="CompiledLibDir" Val="$PCACHEDIR/compile_simlib"/>
     <Option Name="CompiledLibDirXSim" Val=""/>
@@ -46,7 +46,7 @@
     <Option Name="IPStaticSourceDir" Val="$PIPUSERFILESDIR/ipstatic"/>
     <Option Name="EnableBDX" Val="FALSE"/>
     <Option Name="DSABoardId" Val="basys3"/>
-    <Option Name="WTXSimLaunchSim" Val="25"/>
+    <Option Name="WTXSimLaunchSim" Val="14"/>
     <Option Name="WTModelSimLaunchSim" Val="0"/>
     <Option Name="WTQuestaLaunchSim" Val="0"/>
     <Option Name="WTIesLaunchSim" Val="0"/>
@@ -75,22 +75,53 @@
   <FileSets Version="1" Minor="31">
     <FileSet Name="sources_1" Type="DesignSrcs" RelSrcDir="$PSRCDIR/sources_1" RelGenDir="$PGENDIR/sources_1">
       <Filter Type="Srcs"/>
-      <File Path="$PPRDIR/../../Users/kccistc/Downloads/ControlUnit.sv">
+      <File Path="$PSRCDIR/sources_1/imports/0409/ControlUnit.sv">
+        <FileInfo>
+          <Attr Name="ImportPath" Val="$PPRDIR/../0409/ControlUnit.sv"/>
+          <Attr Name="ImportTime" Val="1744160707"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PSRCDIR/sources_1/imports/0409/DataPath.sv">
+        <FileInfo>
+          <Attr Name="ImportPath" Val="$PPRDIR/../0409/DataPath.sv"/>
+          <Attr Name="ImportTime" Val="1744160712"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PSRCDIR/sources_1/imports/0409/RV32I_Core.sv">
+        <FileInfo>
+          <Attr Name="ImportPath" Val="$PPRDIR/../0409/RV32I_Core.sv"/>
+          <Attr Name="ImportTime" Val="1744160726"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PSRCDIR/sources_1/new/ram.sv">
         <FileInfo>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PPRDIR/../../Users/kccistc/Downloads/DataPath.sv">
+      <File Path="$PSRCDIR/sources_1/imports/0409/rom.sv">
         <FileInfo>
+          <Attr Name="ImportPath" Val="$PPRDIR/../0409/rom.sv"/>
+          <Attr Name="ImportTime" Val="1744160723"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PPRDIR/../../Users/kccistc/Downloads/top_DedicatedProcessor.sv">
+      <File Path="$PSRCDIR/sources_1/imports/0409/MCU.sv">
         <FileInfo>
+          <Attr Name="ImportPath" Val="$PPRDIR/../0409/MCU.sv"/>
+          <Attr Name="ImportTime" Val="1744160716"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
@@ -98,7 +129,7 @@
       </File>
       <Config>
         <Option Name="DesignMode" Val="RTL"/>
-        <Option Name="TopModule" Val="top_DedicatedProcessor"/>
+        <Option Name="TopModule" Val="MCU"/>
       </Config>
     </FileSet>
     <FileSet Name="constrs_1" Type="Constrs" RelSrcDir="$PSRCDIR/constrs_1" RelGenDir="$PGENDIR/constrs_1">
@@ -109,8 +140,10 @@
     </FileSet>
     <FileSet Name="sim_1" Type="SimulationSrcs" RelSrcDir="$PSRCDIR/sim_1" RelGenDir="$PGENDIR/sim_1">
       <Filter Type="Srcs"/>
-      <File Path="$PPRDIR/../../Users/kccistc/Downloads/tb_DedicatedProcessor.sv">
+      <File Path="$PSRCDIR/sim_1/imports/0409/tb_RV32I.sv">
         <FileInfo>
+          <Attr Name="ImportPath" Val="$PPRDIR/../0409/tb_RV32I.sv"/>
+          <Attr Name="ImportTime" Val="1744160731"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
@@ -118,7 +151,7 @@
       </File>
       <Config>
         <Option Name="DesignMode" Val="RTL"/>
-        <Option Name="TopModule" Val="tb_DedicatedProcessor"/>
+        <Option Name="TopModule" Val="tb_RV32I"/>
         <Option Name="TopLib" Val="xil_defaultlib"/>
         <Option Name="TopAutoSet" Val="TRUE"/>
         <Option Name="TransportPathDelay" Val="0"/>
