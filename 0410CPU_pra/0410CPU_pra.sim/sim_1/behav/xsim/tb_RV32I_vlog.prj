@@ -1,0 +1,15 @@
+# compile verilog/system verilog design source files
+sv xil_defaultlib  \
+"../../../../0410CPU_pra.srcs/sources_1/imports/20250410_RISC_V_R_S_L_I_Type/ControlUnit.sv" \
+"../../../../0410CPU_pra.srcs/sources_1/imports/20250410_RISC_V_R_S_L_I_Type/DataPath.sv" \
+"../../../../0410CPU_pra.srcs/sources_1/imports/20250410_RISC_V_R_S_L_I_Type/MCU.sv" \
+"../../../../0410CPU_pra.srcs/sources_1/imports/20250410_RISC_V_R_S_L_I_Type/RV32I_Core.sv" \
+"../../../../0410CPU_pra.srcs/sources_1/imports/20250410_RISC_V_R_S_L_I_Type/ram.sv" \
+"../../../../0410CPU_pra.srcs/sources_1/imports/20250410_RISC_V_R_S_L_I_Type/rom.sv" \
+"../../../../0410CPU_pra.srcs/sim_1/imports/0410_CPU/tb_RV32I.sv" \
+
+# compile glbl module
+verilog xil_defaultlib "glbl.v"
+
+# Do not sort compile order
+nosort

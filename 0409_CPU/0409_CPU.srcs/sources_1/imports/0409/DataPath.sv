@@ -10,8 +10,8 @@ module DataPath (
     input  logic        regFileWe,
     input  logic [ 3:0] aluControl,
     input  logic        aluSrcMuxSel,
-    input logic rDataMuxsel,
-    input logic [31:0] rdata,
+    input  logic        rDataMuxsel,
+    input  logic [31:0] rdata,
     output logic [31:0] dataAddr,
     output logic [31:0] dataWData
 );
@@ -20,9 +20,11 @@ module DataPath (
     logic [31:0] immExt;
     logic [31:0] aluSrcMusOut;
     logic [31:0] aluMuxresult;
+    logic [31:0] o_data;
+    logic [31:0] r_data_extend;
     assign instrMemAddr = PCOutData;
     assign dataAddr = aluResult;
-    assign dataWData = RFData2;
+    assign dataWData = o_data;
     RegisterFile U_RegFile (
         .clk(clk),
         .we(regFileWe),
@@ -69,13 +71,43 @@ module DataPath (
     mux u_muax (
         .sel(rDataMuxsel),
         .x0 (aluResult),
-        .x1 (rdata),
+        .x1 (r_data_extend),
         .y  (aluMuxresult)
     );
 
+    data_extend u_data_extend_s (
+        .data     (RFData2),
+        .o_data   (o_data),
+        .instrCode(instrCode)
+    );
+
+    data_extend u_data_extend_l (
+        .data     (rdata),
+        .o_data   (r_data_extend),
+        .instrCode(instrCode)
+    );
 
 endmodule
 
+module data_extend (
+    input  logic [31:0] data,
+    output logic [31:0] o_data,
+    input  logic [31:0] instrCode
+);
+
+    wire [2:0] code = instrCode[14:12];
+
+    always_comb begin
+        o_data = data;
+        case (code)
+            3'b000: o_data = {{24{data[31]}}, data[7:0]};
+            3'b001: o_data = {{16{data[31]}}, data[15:0]};
+            3'b010: o_data = data;
+            3'b100: o_data = {24'b0, data[7:0]};
+            3'b101: o_data = {16'b0, data[15:0]};
+        endcase
+    end
+endmodule
 
 module mux (
     input logic sel,
@@ -99,7 +131,7 @@ module extend (
 );
 
     wire [6:0] opcode = instrCode[6:0];
-
+    wire [2:0] funct3 = instrCode[14:12];
     always_comb begin
         immExt = 32'bx;
         case (opcode)
@@ -110,6 +142,14 @@ module extend (
             };  //20{instrCode[31]} 20번 반복,imm은 상수
             `OP_TYPE_S:
             immExt = {{20{instrCode[31]}}, instrCode[31:25], instrCode[11:7]};
+            `OP_TYPE_I: begin
+                if (funct3 == 3'b001 | funct3 == 3'b101) begin
+                    immExt = {{27{instrCode[31]}}, instrCode[24:20]};
+                end else begin
+                    immExt = {{20{instrCode[31]}}, instrCode[31:20]};
+                end
+            end
+
         endcase
 
     end
@@ -126,7 +166,7 @@ module alu (
         case (aluControl)
             `ADD: result = a + b;
             `SUB: result = a - b;
-            `SLL: result = a << b;
+            `SLL: result = a << b; 
             `SRL: result = a >> b;
             `SRA: result = $signed(a) >>> b;
             `SLT: result = ($signed(a) < $signed(b)) ? 1 : 0;

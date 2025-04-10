@@ -21,10 +21,11 @@ module ControlUnit (
     always_comb begin
         signals = 4'b0;
         case (opcode)
-        //  {regFileWe, aluSrcMuxSel, dataWe}
+        //  {regFileWe, aluSrcMuxSel(imm), dataWe,rDataMuxsel}
             `OP_TYPE_R : signals = 4'b1_0_0_0; // R-Type
             `OP_TYPE_S : signals = 4'b0_1_1_0; // S-Type
             `OP_TYPE_L : signals = 4'b1_1_0_1;
+            `OP_TYPE_I : signals = 4'b1_1_0_0;
         endcase
     end
 
@@ -34,6 +35,7 @@ module ControlUnit (
             `OP_TYPE_R: aluControl = operators;  // // {func7[5], func3}
             `OP_TYPE_S: aluControl = `ADD;  // // {func7[5], func3}
             `OP_TYPE_L: aluControl = `ADD;  // // {func7[5], func3}
+            `OP_TYPE_I: aluControl = operators;
 
         endcase
     end
