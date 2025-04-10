@@ -31,7 +31,7 @@ module ControlUnit (
             `OP_TYPE_I: signals = 7'b1_1_0_0_0_0_0;
             `OP_TYPE_B: signals = 7'b0_0_0_0_1_0_0;
             `OP_TYPE_LU: signals = 7'b1_1_0_0_0_1_0;
-            `OP_TYPE_AU: signals = 7'b1_1_0_0_0_1_0;
+            `OP_TYPE_AU: signals = 7'b1_1_0_0_0_1_1;
             
         endcase
     end

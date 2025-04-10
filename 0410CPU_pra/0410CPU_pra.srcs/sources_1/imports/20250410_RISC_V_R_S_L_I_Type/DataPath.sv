@@ -28,7 +28,7 @@ module DataPath (
     logic [31:0] r_data_extend;
     logic [31:0] s_data_extend;
     logic [31:0] RFDatatwomux;
-    logic [31:0] pcaluplusdata;
+    logic [31:0] lcucdata;
     logic [31:0] wd_mux_data;
 
     assign instrMemAddr = PCOutData;
@@ -62,11 +62,13 @@ module DataPath (
 
     alu U_ALU (
         .aluControl(aluControl),
-        .a(RFDatatwomux),
+        .a(RFData1),
         .b(aluSrcMuxOut),
         .btaken(PCSrcMuxSel),
         .result(aluResult)
     );
+
+    
 
     extend U_ImmExtend (
         .instrCode(instrCode),
@@ -97,25 +99,19 @@ module DataPath (
         .x1 (PC_Imm_Adder_Result),
         .y  (PCSrcData)
     );
-    mux_2x1 rdata_12_mux (
-        .sel(twelsel),
-        .x0 (RFData1),
-        .x1 (32'd12),
-        .y  (RFDatatwomux)
-    );
-    adder u_adder(
-        .a (PCOutData),
-        .b (aluResult),
-        .y (pcaluplusdata)
-    );
-    
-    mux_2x1 add_12_mux (
+    mux_2x1 aulumux (
         .sel(pcrd1sel),
-        .x0 (pcaluplusdata),
-        .x1 (RFWDSrcMuxOut),
+        .x0 (immExt),
+        .x1 (PC_Imm_Adder_Result),
+        .y  (lcucdata)
+    );
+    mux_2x1 wdpcmux (
+        .sel(twelsel),
+        .x0 (RFWDSrcMuxOut),
+        .x1 (lcucdata),
         .y  (wd_mux_data)
     );
-
+    
 
     data_extend l_data_extend (
         .data     (dataRData),
@@ -128,15 +124,6 @@ module DataPath (
         .o_data   (s_data_extend),
         .instrCode(instrCode)
     );
-
-endmodule
-
-module data_extend (
-    input  logic [31:0] data,
-    output logic [31:0] o_data,
-    input  logic [31:0] instrCode
-);
-    wire [6:0] opcode = instrCode[6:0];
 
 endmodule
 
@@ -288,8 +275,8 @@ module extend (
                 instrCode[11:8],
                 1'b0
             };
-            `OP_TYPE_LU:immExt = {12'b0, instrCode[31:12]};
-            `OP_TYPE_AU:immExt = {12'b0, instrCode[31:12]};
+            `OP_TYPE_LU:immExt = {instrCode[31:12],12'b0};
+            `OP_TYPE_AU:immExt = {instrCode[31:12],12'b0};
             default: immExt = 32'bx;
         endcase
     end
