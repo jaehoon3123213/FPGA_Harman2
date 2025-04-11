@@ -1,6 +1,6 @@
 `timescale 1ns / 1ps
 
-    module MCU (
+module MCU (
     input logic clk,
     input logic reset
 );
