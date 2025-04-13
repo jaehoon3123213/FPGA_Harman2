@@ -12,7 +12,7 @@ module RV32I_Core (
 );
     logic       regFileWe; logic [3:0] aluControl;
     logic       aluSrcMuxSel;
-    logic       RFWDSrcMuxSel;
+    logic       [2:0] RFWDSrcMuxSel;
     logic       branch;
     logic       jal;
     logic       jalr;

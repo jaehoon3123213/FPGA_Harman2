@@ -27,10 +27,12 @@ module DataPath (
     logic btaken, PCSrcMuxSel;
     logic [31:0] PC_Imm_AdderResult, PC_4_AdderResult, PCSrcMuxOut;
     logic [31:0] PC_rs1_muxOut;
+    logic [31:0] rdataExtendOut;
+    logic [31:0] wdataExtendOut;
 
     assign instrMemAddr = PCOutData;
     assign dataAddr     = aluResult;
-    assign dataWData    = RFData2;
+    assign dataWData    = wdataExtendOut;
     assign PCSrcMuxSel  = jal | (btaken & branch);
 
     RegisterFile U_RegFile (
@@ -54,7 +56,7 @@ module DataPath (
     mux_5x1 U_RFWDSrcMux (
         .sel(RFWDSrcMuxSel),
         .x0 (aluResult),
-        .x1 (dataRData),
+        .x1 (rdataExtendOut),
         .x2 (immExt),
         .x3 (PC_Imm_AdderResult),
         .x4 (PC_4_AdderResult),
@@ -106,9 +108,57 @@ module DataPath (
         .q(PCOutData)
     );
 
+   s_data_extend w_data_extend (
+     .data(RFData2),
+     .o_data(wdataExtendOut),
+     .instrCode(instrCode)
+);
+   l_data_extend r_data_extend (
+     .data(dataRData),
+     .o_data(rdataExtendOut),
+     .instrCode(instrCode)
+);
 
 endmodule
 
+
+module s_data_extend (
+    input  logic [31:0] data,
+    output logic [31:0] o_data,
+    input  logic [31:0] instrCode
+);
+
+    wire [2:0] code = instrCode[14:12];
+
+    always_comb begin
+        o_data = data;
+        case (code)
+            3'b000: o_data = {24'b0, data[7:0]};
+            3'b001: o_data = {16'b0, data[15:0]};
+            3'b010: o_data = data;
+        endcase
+    end
+endmodule
+
+module l_data_extend (
+    input  logic [31:0] data,
+    output logic [31:0] o_data,
+    input  logic [31:0] instrCode
+);
+
+    wire [2:0] code = instrCode[14:12];
+
+    always_comb begin
+        o_data = data;
+        case (code)
+            3'b000: o_data = {{24{data[7]}}, data[7:0]};
+            3'b001: o_data = {{16{data[15]}}, data[15:0]};
+            3'b010: o_data = data;
+            3'b100: o_data = {24'b0, data[7:0]};
+            3'b101: o_data = {16'b0, data[15:0]};
+        endcase
+    end
+endmodule
 
 module alu (
     input  logic [ 3:0] aluControl,
@@ -179,10 +229,13 @@ module RegisterFile (
 );
     logic [31:0] RegFile[0:2**5-1];
     initial begin
-        for (int i = 0; i < 32; i++) begin
+        for (int i = 0; i < 30; i++) begin
             RegFile[i] = 10 + i;
         end
+        RegFile[30] = 2;
+        RegFile[31] = -1;
     end
+    
 
     always_ff @(posedge clk) begin
         if (we) RegFile[WAddr] <= WData;
