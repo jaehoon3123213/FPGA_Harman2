@@ -228,13 +228,13 @@ module RegisterFile (
     output logic [31:0] RData2
 );
     logic [31:0] RegFile[0:2**5-1];
-    initial begin
-        for (int i = 0; i < 30; i++) begin
-            RegFile[i] = 10 + i;
-        end
-        RegFile[30] = 2;
-        RegFile[31] = -1;
-    end
+    // initial begin
+    //     for (int i = 0; i < 30; i++) begin
+    //         RegFile[i] = 10 + i;
+    //     end
+    //     RegFile[30] = 2;
+    //     RegFile[31] = -1;
+    // end
     
 
     always_ff @(posedge clk) begin
