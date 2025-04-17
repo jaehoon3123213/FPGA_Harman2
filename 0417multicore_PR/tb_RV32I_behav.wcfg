@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="tb_RV32I_behav.wdb" id="1">
+         <top_modules>
+            <top_module name="glbl" />
+            <top_module name="tb_RV32I" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="0fs"></ZoomStartTime>
+      <ZoomEndTime time="2936000001fs"></ZoomEndTime>
+      <Cursor1Time time="8390735fs"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="137"></NameColumnWidth>
+      <ValueColumnWidth column_width="63"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="17" />
+   <wvobject fp_name="/tb_RV32I/clk" type="logic">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_RV32I/reset" type="logic">
+      <obj_property name="ElementShortName">reset</obj_property>
+      <obj_property name="ObjectShortName">reset</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_RV32I/dut/U_Core/U_DataPath/U_RegFile/clk" type="logic">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_RV32I/dut/U_Core/U_DataPath/U_RegFile/we" type="logic">
+      <obj_property name="ElementShortName">we</obj_property>
+      <obj_property name="ObjectShortName">we</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_RV32I/dut/U_Core/U_DataPath/U_RegFile/RAddr1" type="array">
+      <obj_property name="ElementShortName">RAddr1[4:0]</obj_property>
+      <obj_property name="ObjectShortName">RAddr1[4:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_RV32I/dut/U_Core/U_DataPath/U_RegFile/RAddr2" type="array">
+      <obj_property name="ElementShortName">RAddr2[4:0]</obj_property>
+      <obj_property name="ObjectShortName">RAddr2[4:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_RV32I/dut/U_Core/U_DataPath/U_RegFile/WAddr" type="array">
+      <obj_property name="ElementShortName">WAddr[4:0]</obj_property>
+      <obj_property name="ObjectShortName">WAddr[4:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_RV32I/dut/U_Core/U_DataPath/U_RegFile/WData" type="array">
+      <obj_property name="ElementShortName">WData[31:0]</obj_property>
+      <obj_property name="ObjectShortName">WData[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_RV32I/dut/U_Core/U_DataPath/U_RegFile/RData1" type="array">
+      <obj_property name="ElementShortName">RData1[31:0]</obj_property>
+      <obj_property name="ObjectShortName">RData1[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_RV32I/dut/U_Core/U_DataPath/U_RegFile/RData2" type="array">
+      <obj_property name="ElementShortName">RData2[31:0]</obj_property>
+      <obj_property name="ObjectShortName">RData2[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_RV32I/dut/U_Core/U_DataPath/U_RegFile/RegFile" type="array">
+      <obj_property name="ElementShortName">RegFile[0:31][31:0]</obj_property>
+      <obj_property name="ObjectShortName">RegFile[0:31][31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_RV32I/dut/U_RAM/clk" type="logic">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_RV32I/dut/U_RAM/we" type="logic">
+      <obj_property name="ElementShortName">we</obj_property>
+      <obj_property name="ObjectShortName">we</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_RV32I/dut/U_RAM/addr" type="array">
+      <obj_property name="ElementShortName">addr[31:0]</obj_property>
+      <obj_property name="ObjectShortName">addr[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_RV32I/dut/U_RAM/wData" type="array">
+      <obj_property name="ElementShortName">wData[31:0]</obj_property>
+      <obj_property name="ObjectShortName">wData[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_RV32I/dut/U_RAM/rData" type="array">
+      <obj_property name="ElementShortName">rData[31:0]</obj_property>
+      <obj_property name="ObjectShortName">rData[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_RV32I/dut/U_RAM/mem" type="array">
+      <obj_property name="ElementShortName">mem[0:63][31:0]</obj_property>
+      <obj_property name="ObjectShortName">mem[0:63][31:0]</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+   </wvobject>
+</wave_config>
