@@ -1,4 +1,6 @@
 `timescale 1ns / 1ps
+
+`timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
 // Company: 
 // Engineer: 
@@ -33,6 +35,12 @@ module GPO_Periph (
     output logic [7:0] outPort
 );
 
+
+logic [7:0] moder;
+logic [7:0] odr;
+
+APB_Slave u_apb(.*);
+GPO U_GPO_IP (.*);
 
 endmodule
 
@@ -98,3 +106,19 @@ end
 
 endmodule
 
+
+
+module GPO (
+    input logic [7:0] moder,
+    input logic [7:0] odr,
+    output logic [7:0] outPort
+);
+
+genvar i;
+generate 
+    for(i=0; i<8; i++) begin
+    assign outPort[i] = moder[i] ? odr[i] : 1'bz;
+end
+endgenerate
+
+endmodule
