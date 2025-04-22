@@ -3,17 +3,21 @@
 module MCU (
     input logic clk,
     input logic reset,
-    output logic [7:0] GPOA
-);
+    inout logic [15:0] GPIO
+); 
     // rom signal
     logic [31:0] instrCode;
     logic [31:0] instrMemAddr;
     //core_Signal
     logic        dataWe;
-    logic [31:0] dataAddr;
+    logic [31:0] dataAddr; 
     logic [31:0] dataWData;
     logic [31:0] dataRData;
     
+
+
+
+
     logic PCLK;
     logic PRESET;
     logic [31:0] PADDR;
@@ -22,15 +26,15 @@ module MCU (
     logic        PENABLE;
     logic        PSEL_RAM;
     logic        PSEL_GPO;
-    logic        PSEL2;
+    logic        PSEL_GPI;
     logic        PSEL3;
     logic [31:0] PRDATA_RAM;
     logic [31:0] PRDATA_GPO;
-    logic [31:0] PRDATA2;
+    logic [31:0] PRDATA_GPI; 
     logic [31:0] PRDATA3;
     logic        PREADY_RAM;
     logic        PREADY_GPO;
-    logic        PREADY2;
+    logic        PREADY_GPI;
     logic        PREADY3;
 
     logic        transfer;  // trigger signal
@@ -71,13 +75,13 @@ assign PRESET = reset;
         .PREADY2 (),
         .PREADY3 ()
     );
-
+  
     GPO_Periph U_GPO (
         .*,
     .PSEL(PSEL_GPO),
     .PRDATA(PRDATA_GPO),
     .PREADY(PREADY_GPO),
-    .outPort(GPOA)
+    .inoutPort(GPIO)
 );
 
     ram u_ram(
@@ -91,5 +95,12 @@ assign PRESET = reset;
         .PREADY  (PREADY_RAM )
     );
 
-    
+    // GPI_Periph U_GPI(
+    //     .*,
+    // .PSEL(PSEL_GPI),
+    // .PRDATA(PRDATA_GPI),
+    // .PREADY(PREADY_GPI),
+    // .inPort(GPIB)
+    // );
+
 endmodule

@@ -1,0 +1,10 @@
+# compile verilog/system verilog design source files
+sv xil_defaultlib  \
+"../../../../project_0422_FND.srcs/sources_1/new/FND.sv" \
+"../../../../project_0422_FND.srcs/sim_1/new/tb_FndController_APB.sv" \
+
+# compile glbl module
+verilog xil_defaultlib "glbl.v"
+
+# Do not sort compile order
+nosort

@@ -1,0 +1,1 @@
+-wto "bc59231dd01e4553a5ccd6e9aee51691" --incr --debug "typical" --relax --mt "2" -L "xil_defaultlib" -L "uvm" -L "unisims_ver" -L "unimacro_ver" -L "secureip" --snapshot "GPO_Periph_behav" "xil_defaultlib.GPO_Periph" "xil_defaultlib.glbl" -log "elaborate.log" 

@@ -4,9 +4,11 @@ module rom (
     input  logic [31:0] addr,
     output logic [31:0] data
 );
-    logic [31:0] rom[0:127];
+    logic [31:0] rom[0:2**12-1];
 
-    initial begin
+
+
+    initial begin  
     /*
         //rom[x]=32'b fucn7 _ rs2 _ rs1 _f3 _ rd  _opcode; // R-Type
         rom[0] = 32'b0000000_00001_00010_000_00100_0110011; // add x4, x2, x1
@@ -21,6 +23,7 @@ module rom (
         rom[5] = 32'b000000000001_00000_000_00001_0010011; // addi x1, x0, 1;
         rom[6] = 32'b000000000010_00001_001_00110_0010011; // slli x6, x1, 2;
     */   
+    
     
     $readmemh("code.mem", rom);
     end

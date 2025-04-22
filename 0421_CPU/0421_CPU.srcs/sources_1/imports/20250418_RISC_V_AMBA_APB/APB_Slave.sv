@@ -1,6 +1,4 @@
-`timescale 1ns / 1ps
-
-`timescale 1ns / 1ps
+`timescale 1ns / 1ps `timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
 // Company: 
 // Engineer: 
@@ -25,22 +23,31 @@ module GPO_Periph (
     input  logic        PCLK,
     input  logic        PRESET,
     //APB Interface Signals
-    input  logic [3:0] PADDR,
+    input  logic [ 3:0] PADDR,
     input  logic [31:0] PWDATA,
     input  logic        PWRITE,
     input  logic        PENABLE,
     input  logic        PSEL,
     output logic [31:0] PRDATA,
     output logic        PREADY,
-    output logic [7:0] outPort
+    inout  logic [15:0] inoutPort
 );
 
 
-logic [7:0] moder;
-logic [7:0] odr;
+    logic [7:0] moder;
+    logic [7:0] odr;
+    logic [7:0] idr;
 
-APB_Slave u_apb(.*);
-GPO U_GPO_IP (.*);
+    APB_Slave u_apb (.*);
+
+
+    GPO U_GPO_IP (
+        .*,
+        .inoutPort(inoutPort)
+    );
+
+
+
 
 endmodule
 
@@ -48,57 +55,57 @@ module APB_Slave (
     input  logic        PCLK,
     input  logic        PRESET,
     //APB Interface Signals
-    input  logic [3:0] PADDR,
+    input  logic [ 3:0] PADDR,
     input  logic [31:0] PWDATA,
     input  logic        PWRITE,
     input  logic        PENABLE,
     input  logic        PSEL,
     output logic [31:0] PRDATA,
     output logic        PREADY,
-    output logic [7:0] moder,
-    output logic [7:0] odr,
-    output logic [7:0] outPort
+    output logic [ 7:0] moder,
+    output logic [ 7:0] odr,
+    input  logic [ 7:0] idr
 );
 
 
 
-logic [31:0] slv_reg0, slv_reg1, slv_reg2, slv_reg3;
+    logic [31:0] slv_reg0, slv_reg1, slv_reg2, slv_reg3;
 
 
-assign moder = slv_reg0[7:0];
-assign odr = slv_reg1[7:0];
+    assign moder = slv_reg0[7:0];
+    assign odr = slv_reg1[7:0];
+    assign slv_reg2[7:0] = idr;
 
-always_ff @( posedge PCLK, posedge PRESET ) begin
-    if(PRESET) begin
-        slv_reg0 <=0;
-        slv_reg1 <=0;
-        slv_reg2 <=0;
-        slv_reg3 <=0;
-    end else begin
-        PREADY <= 1'b0;
-        if (PSEL && PENABLE) begin
-            PREADY <= 1'b1;
-            if(PWRITE) begin
-                case (PADDR[3:2])
-                    2'd0 : slv_reg0<= PWDATA;
-                    2'd1 : slv_reg1<= PWDATA;
-                    2'd2 : slv_reg2<= PWDATA;
-                    2'd3 : slv_reg3<= PWDATA;
-                endcase
-            end
-            else begin
-                PRDATA <= 32'bx;
-                case (PADDR[3:2])
-                    2'd0 : PRDATA <= slv_reg0;
-                    2'd1 : PRDATA <= slv_reg1;
-                    2'd2 : PRDATA <= slv_reg2;
-                    2'd3 : PRDATA <= slv_reg3;
-                endcase
+
+    always_ff @(posedge PCLK, posedge PRESET) begin
+        if (PRESET) begin
+            slv_reg0 <= 0;
+            slv_reg1 <= 0;
+            // slv_reg2 <= 0;
+            // slv_reg3 <= 0;
+        end else begin
+            PREADY <= 1'b0;
+            if (PSEL && PENABLE) begin
+                PREADY <= 1'b1;
+                if (PWRITE) begin
+                    case (PADDR[3:2])
+                        2'd0: slv_reg0 <= PWDATA;
+                        2'd1: slv_reg1 <= PWDATA;
+                        // 2'd2: slv_reg2 <= PWDATA;
+
+                    endcase
+                end else begin
+                    PRDATA <= 32'bx;
+                    case (PADDR[3:2])
+                        2'd0: PRDATA <= slv_reg0;
+                        2'd1: PRDATA <= slv_reg1;
+                        2'd2: PRDATA <= slv_reg2;
+                    endcase
+                end
             end
         end
+
     end
-    
-end
 
 
 
@@ -109,16 +116,21 @@ endmodule
 
 
 module GPO (
-    input logic [7:0] moder,
-    input logic [7:0] odr,
-    output logic [7:0] outPort
+    input  logic [7:0] moder,
+    input  logic [7:0] odr,
+    output logic [7:0] idr,
+    inout logic [15:0] inoutPort
 );
 
-genvar i;
-generate 
-    for(i=0; i<8; i++) begin
-    assign outPort[i] = moder[i] ? odr[i] : 1'bz;
-end
-endgenerate
+    genvar i;
+
+    generate
+        for (i = 0; i < 8; i++) begin
+            assign inoutPort[i+8] = moder[i] ? odr[i] : 1'bz;
+            assign idr[i] = ~moder[i] ? inoutPort[i] : 1'bz;
+        end
+    endgenerate
+
 
 endmodule
+

@@ -1,7 +1,7 @@
 Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
 -------------------------------------------------------------------------------------------------------------------------------
 | Tool Version     : Vivado v.2020.2 (win64) Build 3064766 Wed Nov 18 09:12:45 MST 2020
-| Date             : Mon Apr 21 12:43:14 2025
+| Date             : Mon Apr 21 17:21:31 2025
 | Host             : DESKTOP-7CFQ9ND running 64-bit major release  (build 9200)
 | Command          : report_power -file MCU_power_routed.rpt -pb MCU_power_summary_routed.pb -rpx MCU_power_routed.rpx
 | Design           : MCU
@@ -30,14 +30,14 @@ Table of Contents
 ----------
 
 +--------------------------+----------------------------------+
-| Total On-Chip Power (W)  | 19.475 (Junction temp exceeded!) |
+| Total On-Chip Power (W)  | 22.466 (Junction temp exceeded!) |
 | Design Power Budget (W)  | Unspecified*                     |
 | Power Budget Margin (W)  | NA                               |
-| Dynamic (W)              | 19.023                           |
-| Device Static (W)        | 0.453                            |
+| Dynamic (W)              | 21.979                           |
+| Device Static (W)        | 0.487                            |
 | Effective TJA (C/W)      | 5.0                              |
 | Max Ambient (C)          | 0.0                              |
-| Junction Temperature (C) | 122.4                            |
+| Junction Temperature (C) | 125.0                            |
 | Confidence Level         | Low                              |
 | Setting File             | ---                              |
 | Simulation Activity File | ---                              |
@@ -52,18 +52,19 @@ Table of Contents
 +--------------------------+-----------+----------+-----------+-----------------+
 | On-Chip                  | Power (W) | Used     | Available | Utilization (%) |
 +--------------------------+-----------+----------+-----------+-----------------+
-| Slice Logic              |     9.074 |     1689 |       --- |             --- |
-|   LUT as Logic           |     8.286 |      957 |     20800 |            4.60 |
-|   LUT as Distributed RAM |     0.425 |       48 |      9600 |            0.50 |
-|   CARRY4                 |     0.222 |       50 |      8150 |            0.61 |
-|   Register               |     0.135 |      491 |     41600 |            1.18 |
+| Slice Logic              |     7.240 |     1721 |       --- |             --- |
+|   LUT as Logic           |     6.550 |     1023 |     20800 |            4.92 |
+|   LUT as Distributed RAM |     0.376 |       48 |      9600 |            0.50 |
+|   CARRY4                 |     0.198 |       50 |      8150 |            0.61 |
+|   Register               |     0.109 |      430 |     41600 |            1.03 |
 |   BUFG                   |     0.006 |        1 |        32 |            3.13 |
+|   F7/F8 Muxes            |    <0.001 |        1 |     32600 |           <0.01 |
 |   Others                 |     0.000 |       18 |       --- |             --- |
-| Signals                  |     9.945 |     1424 |       --- |             --- |
+| Signals                  |     7.715 |     1459 |       --- |             --- |
 | Block RAM                |    <0.001 |        1 |        50 |            2.00 |
-| I/O                      |     0.004 |       10 |       106 |            9.43 |
-| Static Power             |     0.453 |          |           |                 |
-| Total                    |    19.475 |          |           |                 |
+| I/O                      |     7.024 |       18 |       106 |           16.98 |
+| Static Power             |     0.487 |          |           |                 |
+| Total                    |    22.466 |          |           |                 |
 +--------------------------+-----------+----------+-----------+-----------------+
 
 
@@ -73,16 +74,16 @@ Table of Contents
 +-----------+-------------+-----------+-------------+------------+-------------+-------------+------------+
 | Source    | Voltage (V) | Total (A) | Dynamic (A) | Static (A) | Powerup (A) | Budget (A)  | Margin (A) |
 +-----------+-------------+-----------+-------------+------------+-------------+-------------+------------+
-| Vccint    |       1.000 |    19.337 |      19.023 |      0.314 |       NA    | Unspecified | NA         |
-| Vccaux    |       1.800 |     0.050 |       0.000 |      0.050 |       NA    | Unspecified | NA         |
-| Vcco33    |       3.300 |     0.001 |       0.000 |      0.001 |       NA    | Unspecified | NA         |
+| Vccint    |       1.000 |    15.333 |      14.992 |      0.341 |       NA    | Unspecified | NA         |
+| Vccaux    |       1.800 |     0.309 |       0.256 |      0.053 |       NA    | Unspecified | NA         |
+| Vcco33    |       3.300 |     1.979 |       1.978 |      0.001 |       NA    | Unspecified | NA         |
 | Vcco25    |       2.500 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
 | Vcco18    |       1.800 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
 | Vcco15    |       1.500 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
 | Vcco135   |       1.350 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
 | Vcco12    |       1.200 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
 | Vccaux_io |       1.800 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
-| Vccbram   |       1.000 |     0.009 |       0.000 |      0.009 |       NA    | Unspecified | NA         |
+| Vccbram   |       1.000 |     0.010 |       0.000 |      0.010 |       NA    | Unspecified | NA         |
 | MGTAVcc   |       1.000 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
 | MGTAVtt   |       1.200 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
 | Vccadc    |       1.800 |     0.020 |       0.000 |      0.020 |       NA    | Unspecified | NA         |
@@ -140,25 +141,25 @@ Table of Contents
 +-----------------------------+-----------+
 | Name                        | Power (W) |
 +-----------------------------+-----------+
-| MCU                         |    19.023 |
-|   U_Core                    |    18.841 |
-|     U_ControlUnit           |     5.586 |
-|     U_DataPath              |    13.255 |
-|       U_ALU                 |     0.554 |
-|       U_DecReg_ImmExtend    |     1.020 |
-|       U_DecReg_RFRD1        |     7.347 |
-|       U_DecReg_RFRD2        |     0.860 |
-|       U_ExeReg_ALU          |     0.199 |
-|       U_ExeReg_PCSrcMux     |     0.085 |
-|       U_ExeReg_RFRD2        |     0.161 |
-|       U_MemAccReg_dataRData |     0.007 |
-|       U_PC                  |     1.608 |
-|       U_PC_4_Adder          |     0.152 |
-|       U_PC_Imm_Adder        |     0.509 |
-|       U_RegFile             |     0.753 |
-|   U_GPO                     |     0.022 |
-|     u_apb                   |     0.022 |
-|   u_APB_Master              |     0.118 |
+| MCU                         |    21.979 |
+|   U_Core                    |    14.759 |
+|     U_ControlUnit           |     4.691 |
+|     U_DataPath              |    10.068 |
+|       U_ALU                 |     0.479 |
+|       U_DecReg_ImmExtend    |     0.890 |
+|       U_DecReg_RFRD1        |     5.285 |
+|       U_DecReg_RFRD2        |     0.503 |
+|       U_ExeReg_ALU          |     0.187 |
+|       U_ExeReg_PCSrcMux     |     0.108 |
+|       U_ExeReg_RFRD2        |     0.116 |
+|       U_MemAccReg_dataRData |     0.006 |
+|       U_PC                  |     1.352 |
+|       U_PC_4_Adder          |     0.125 |
+|       U_PC_Imm_Adder        |     0.420 |
+|       U_RegFile             |     0.596 |
+|   U_GPO                     |     0.041 |
+|     u_apb                   |     0.041 |
+|   u_APB_Master              |     0.101 |
 +-----------------------------+-----------+
 
 
