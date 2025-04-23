@@ -186,6 +186,8 @@ module time_counter2 #(
 endmodule
 
 
+
+
 module stopwatch_cu2(
     input  clk,
     input sw,
