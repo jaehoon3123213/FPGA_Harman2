@@ -54,7 +54,7 @@ class transaction;
         PWDATA inside {4'b0, 4'b1};
     }
     constraint c_data {if (PADDR == 4'h8) PWDATA < 4'b1111;}
-    constraint f_data {if (PADDR == 4'h4) PWDATA < 10000;}
+    // constraint f_data {if (PADDR == 4'h4) PWDATA < 10000;}
     task display(string name);
         $display(
             "[%s] PADDR = %h, PWDATA = %h, PWRITE = %h, PENABLE = %h, PSEL = %h, PRDATA = %h, PREADY = %h, fndCom = %h, fndCom = %h",
@@ -183,8 +183,15 @@ class scoreboard;
             Mon2Scb.get(tr);
             tr.display("SCB");
             if (tr.PWRITE) begin
+                if(tr.PADDR/4 == 1) begin
+                    ref_model[tr.PADDR/4] = tr.PWDATA % 10000;
+                    write = write +1;
+                end
+                else begin
+                    
                 ref_model[tr.PADDR/4] = tr.PWDATA;
                 write = write +1;
+                end
                 if (ref_model[0] == 0) begin
                     if (tr.fndCom == 4'b1111 && tr.fndFont == 8'hff) begin
                         $display(

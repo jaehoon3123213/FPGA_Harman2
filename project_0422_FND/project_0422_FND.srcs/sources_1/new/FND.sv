@@ -118,7 +118,7 @@ module APB_SlaveIntf_FND (
                 if (PWRITE) begin
                     case (PADDR[3:2])
                         2'd0: slv_reg0 <= PWDATA;
-                        2'd1: slv_reg1 <= PWDATA;
+                        2'd1: slv_reg1 <= PWDATA % 10000;
                         2'd2: slv_reg2 <= PWDATA;
                         // 2'd3: slv_reg3 <= PWDATA;
                     endcase
