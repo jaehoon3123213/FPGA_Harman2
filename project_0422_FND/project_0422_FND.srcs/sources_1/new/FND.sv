@@ -14,13 +14,13 @@ module FND_Periph (
     output logic        PREADY,
     // export signals
     output logic [ 3:0] fndCom,
-    output logic [ 7:0] fndFont
+    output logic [ 7:0] fndFont,
+    output logic [1:0] o_sel
 );
 
     logic fcr;
     logic [13:0] fdr;
     logic [3:0] fpr;
-    logic [1:0] o_sel;
     logic [3:0] digit_1;
     logic [3:0] digit_10;
     logic [3:0] digit_100;
@@ -243,7 +243,7 @@ module mux_4x1 (
 endmodule
 
 module digit_splitter (
-    input  [15:0] sum,
+    input  [13:0] sum,
     output [ 3:0] digit_1,
     output [ 3:0] digit_10,
     output [ 3:0] digit_100,
@@ -303,7 +303,7 @@ module decoder_2x4 (
     input fcr,
     output reg [3:0] seg_comm
 );
-    always @(seg_sel) begin
+    always_comb begin
         seg_comm = 4'b1111;
         if (fcr) begin
         case (seg_sel)

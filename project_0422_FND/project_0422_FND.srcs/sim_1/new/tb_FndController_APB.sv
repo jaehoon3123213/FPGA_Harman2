@@ -213,6 +213,7 @@ interface APB_Slave_Interface;
     logic        PREADY;
     logic [ 3:0] fndCom;  //dut out data
     logic [ 7:0] fndFont;  // dut out data
+    logic [1:0]  o_sel;
 endinterface  //APB_Slave_Interface
 
 
@@ -227,6 +228,7 @@ class transaction;
     logic             PREADY;
     logic      [ 3:0] fndCom;  //dut out data
     logic      [ 7:0] fndFont;  // dut out data
+    logic [1:0] o_sel;
     constraint c_paddr {PADDR inside {4'h0, 4'h4, 4'h8};}
     constraint c_wdata {if (PADDR == 4'h4) PWDATA inside {4'b0001,4'b0010, 4'b0100, 4'b1000};}
     constraint a_wdata {if (PADDR == 4'h0) PWDATA inside {4'b0001,4'b0000};}
@@ -297,21 +299,6 @@ endclass  //dirver
 
 
 
-class monitor;
-    function new();
-        
-    endfunction //new()
-endclass //monitor
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -343,6 +330,7 @@ class monitor;
             tr.PREADY = fnd_interf.PREADY;
             tr.fndCom = fnd_interf.fndCom;  //dut out data
             tr.fndFont =  fnd_interf.fndFont;
+            tr.o_sel = fnd_interf.o_sel;
             tr.display("Mon");
             montoscb_mbox.put(tr);
         end
@@ -363,6 +351,11 @@ class scoreboard;
     logic             PREADY;
     logic      [ 3:0] fndCom;  //dut out data
     logic      [ 7:0] fndFont;  // dut out data
+    logic [3:0] digit_1;
+    logic [3:0] digit_10;
+    logic [3:0] digit_100;
+    logic [3:0] digit_1000;
+
     function new(mailbox#(transaction) montoscb_mbox);
         this.montoscb_mbox = montoscb_mbox;
         foreach (ref_model[i])
@@ -375,6 +368,9 @@ class scoreboard;
         forever begin
             montoscb_mbox.get(tr);
             tr.display("SCB");
+            if (tr.PWRITE) begin
+                ref_model[tr.PADDR/4] = tr.PWDATA;
+            end
             case (ref_model[2][3:0])
                 4'h0: fndFont = 8'hC0;
                 4'h1: fndFont = 8'hF9;
@@ -394,21 +390,18 @@ class scoreboard;
                 4'hF: fndFont = 8'h8E;
             default: fndFont = 8'hff;
         endcase
-            if (tr.PWRITE) begin
-                ref_model[tr.PADDR/4] = tr.PWDATA;
-            end
-            if (ref_model[0][0] == 0) begin
-                temp = 4'b0000;
-            end
-            else begin
-                temp = ref_model[1][3:0];
-            end
+            digit_1 = ref_model[1] % 10;
+            digit_10 = ref_model[1] / 10 % 10;
+            digit_100 = ref_model[1] / 100 % 10;
+            digit_1000 = ref_model[1] / 1000 % 10;
+
             if (~temp == tr.fndCom && tr.fndFont == fndFont) begin
                  $display("pass ref_model: %h == fndcomm  == %h ref_model: %h == fndfont  == %h",~temp, tr.fndCom,fndFont,tr.fndFont);
                 end
             else begin
                 $display("fail ref_model: %h == fndcomm  == %h ref_model: %h == fndfont  == %h",~temp, tr.fndCom, fndFont, tr.fndFont);
             end
+
             
 
         end
@@ -467,7 +460,8 @@ module tb_FndController_APB ();
         .PRDATA(fnd_interf.PRDATA),
         .PREADY(fnd_interf.PREADY),
         .fndCom(fnd_interf.fndCom),
-        .fndFont(fnd_interf.fndFont)
+        .fndFont(fnd_interf.fndFont),
+        .o_sel(fnd_interf.o_sel)
     );
 
 
